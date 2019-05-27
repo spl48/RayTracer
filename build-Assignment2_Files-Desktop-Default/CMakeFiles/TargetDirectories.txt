@@ -1,0 +1,3 @@
+/home/cosc/student/spl48/Documents/COSC363/Assignment2/build-Assignment2_Files-Desktop-Default/CMakeFiles/rebuild_cache.dir
+/home/cosc/student/spl48/Documents/COSC363/Assignment2/build-Assignment2_Files-Desktop-Default/CMakeFiles/RayTracer.out.dir
+/home/cosc/student/spl48/Documents/COSC363/Assignment2/build-Assignment2_Files-Desktop-Default/CMakeFiles/edit_cache.dir
