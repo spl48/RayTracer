@@ -13,6 +13,7 @@
 #include "SceneObject.h"
 #include "Plane.h"
 #include "Ray.h"
+#include "Cylinder.h"
 #include "TextureBMP.h"
 #include <GL/glut.h>
 using namespace std;
@@ -121,7 +122,7 @@ glm::vec3 trace(Ray ray, int step)
         colorSum = ambientCol * materialCol + lDotn * materialCol + spec;
     }
 
-    if(ray.xindex == 0 && step < MAX_STEPS)
+    if(ray.xindex == 0 && step < MAX_STEPS) //Reflective Sphere
     {
         glm::vec3 reflectedDir = glm::reflect(ray.dir, normalVector);
         Ray reflectedRay(ray.xpt, reflectedDir);
@@ -129,7 +130,7 @@ glm::vec3 trace(Ray ray, int step)
         colorSum = colorSum + (0.8f*reflectedCol);
     }
 
-    if(ray.xindex == 1)
+    if(ray.xindex == 1) //Textured Plane
     {
         float a1 = -40; float a2 = -300; float b1 = -30; float b2 = 30;
         float texcoords = (ray.xpt.z - a1)/(a2-a1);
@@ -142,7 +143,7 @@ glm::vec3 trace(Ray ray, int step)
         }
     }
 
-    if(ray.xindex == 2 && step < MAX_STEPS)
+    if(ray.xindex == 2 && step < MAX_STEPS) //Refractive Sphere
     {
         float eta = 1/1.1f;
         glm::vec3 g = glm::refract(ray.dir, normalVector, eta);
@@ -157,20 +158,19 @@ glm::vec3 trace(Ray ray, int step)
         colorSum += refCol;
     }
 
-    if(ray.xindex == 3 && step < MAX_STEPS)
+    if(ray.xindex == 3 && step < MAX_STEPS) //Transparent Sphere
     {
         glm::vec3 h = ray.dir;
         Ray refRay(ray.xpt, h);
         refRay.closestPt(sceneObjects);
         if(refRay.xindex == -1) return colorSum;
 
-
         Ray refRay2(refRay.xpt, h);
         glm::vec3 refCol = trace(refRay2, step+1); //Recursion!
         colorSum += refCol;
     }
 
-    if(ray.xindex == 4)
+    if(ray.xindex == 4) //Textured Sphere
     {
         float a1 = 20; float a2 = 40; float b1 = 20; float b2 = 40;
         float texcoordt = (ray.xpt.y - a1)/(a2-a1);
@@ -258,14 +258,17 @@ void initialize()
 
     sceneObjects.push_back(plane);
 
-    Sphere *tranlucentSphere = new Sphere(glm::vec3(-7.0, -5.0, -110.0), 4.0, glm::vec3(0.3, 0.3, 0.3));
-    sceneObjects.push_back(tranlucentSphere);
+    Sphere *refractiveSphere = new Sphere(glm::vec3(-7.0, -5.0, -110.0), 4.0, glm::vec3(0.3, 0.3, 0.3));
+    sceneObjects.push_back(refractiveSphere);
 
     Sphere *transparentSphere = new Sphere(glm::vec3(10.0, -12.0, -110.0), 4.0, glm::vec3(0.7, 0.3, 0.3));
     sceneObjects.push_back(transparentSphere);
 
     Sphere *texturedSphere = new Sphere(glm::vec3(30.0, 30.0, -170.0), 10.0, glm::vec3(0.0, 0.0, 0.0));
     sceneObjects.push_back(texturedSphere);
+
+    Cylinder *cylinder = new Cylinder(glm::vec3(-15.0, -12.0, -115.0), 5.0, 2.0, glm::vec3(1.0, 1.0, 0.0));
+    sceneObjects.push_back(cylinder);
 
     //-- Cube made of six planes
     drawCube(10, -20, -140, 8, 30);
