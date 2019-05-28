@@ -1,13 +1,13 @@
 /*----------------------------------------------------------
 * COSC363  Ray Tracer
 *
-*  The cylinder class
+*  The cone class
 *  This is a subclass of Object, and hence implements the
 *  methods intersect() and normal().
 -------------------------------------------------------------*/
 
-#ifndef H_CYLINDER
-#define H_CYLINDER
+#ifndef H_CONE
+#define H_CONE
 #include <glm/glm.hpp>
 #include "SceneObject.h"
 
@@ -15,7 +15,7 @@
  * Defines a simple Cylinder located at 'center'
  * with the specified radius and height
  */
-class Cylinder : public SceneObject
+class Cone : public SceneObject
 {
 
 private:
@@ -24,13 +24,13 @@ private:
     float height;
 
 public:
-    Cylinder()
-        : center(glm::vec3(0)), radius(1), height(1)  //Default constructor creates a unit Cylinder
+    Cone()
+        : center(glm::vec3(0)), radius(1), height(1)  //Default constructor creates a unit Cone
     {
         color = glm::vec3(1);
     };
 
-    Cylinder(glm::vec3 c, float r, float h, glm::vec3 col)
+    Cone(glm::vec3 c, float r, float h, glm::vec3 col)
         : center(c), radius(r), height(h)
     {
         color = col;
@@ -42,4 +42,4 @@ public:
 
 };
 
-#endif //!H_CYLINDER
+#endif //!H_Cone

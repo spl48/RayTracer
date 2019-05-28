@@ -27,7 +27,7 @@ float Cylinder::intersect(glm::vec3 posn, glm::vec3 dir)
     glm::vec3 t1point = glm::vec3(posn + t1 * dir);
     glm::vec3 t2point = glm::vec3(posn + t2 * dir);
 
-    if (t1point.y > (height + center.y)) {
+    if (t1point.y > (height + center.y) && center.y < t1point.y) {
         if (t2point.y <= (height + center.y)) return t2;
         else t1 = -1.0;
     }

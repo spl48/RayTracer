@@ -14,6 +14,7 @@
 #include "Plane.h"
 #include "Ray.h"
 #include "Cylinder.h"
+#include "Cone.h"
 #include "TextureBMP.h"
 #include <GL/glut.h>
 using namespace std;
@@ -269,6 +270,9 @@ void initialize()
 
     Cylinder *cylinder = new Cylinder(glm::vec3(-15.0, -12.0, -115.0), 5.0, 2.0, glm::vec3(1.0, 1.0, 0.0));
     sceneObjects.push_back(cylinder);
+
+    Cone *cone = new Cone(glm::vec3(0.0, -20.0, -120.0), 5.0, 7.0, glm::vec3(0.0, 1.0, 1.0));
+    sceneObjects.push_back(cone);
 
     //-- Cube made of six planes
     drawCube(10, -20, -140, 8, 30);

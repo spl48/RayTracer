@@ -6,6 +6,18 @@
 
 #IncludeRegexTransform: 
 
+/home/cosc/student/spl48/Documents/COSC363/Assignment2/Assignment2_Files/Cone.cpp
+Cone.h
+/home/cosc/student/spl48/Documents/COSC363/Assignment2/Assignment2_Files/Cone.h
+math.h
+-
+
+/home/cosc/student/spl48/Documents/COSC363/Assignment2/Assignment2_Files/Cone.h
+glm/glm.hpp
+-
+SceneObject.h
+/home/cosc/student/spl48/Documents/COSC363/Assignment2/Assignment2_Files/SceneObject.h
+
 /home/cosc/student/spl48/Documents/COSC363/Assignment2/Assignment2_Files/Cylinder.cpp
 Cylinder.h
 /home/cosc/student/spl48/Documents/COSC363/Assignment2/Assignment2_Files/Cylinder.h
@@ -63,6 +75,8 @@ Ray.h
 /home/cosc/student/spl48/Documents/COSC363/Assignment2/Assignment2_Files/Ray.h
 Cylinder.h
 /home/cosc/student/spl48/Documents/COSC363/Assignment2/Assignment2_Files/Cylinder.h
+Cone.h
+/home/cosc/student/spl48/Documents/COSC363/Assignment2/Assignment2_Files/Cone.h
 TextureBMP.h
 /home/cosc/student/spl48/Documents/COSC363/Assignment2/Assignment2_Files/TextureBMP.h
 GL/glut.h
