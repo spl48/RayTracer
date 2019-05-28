@@ -213,11 +213,33 @@ void display()
         {
             yp = YMIN + j*cellY;
 
-            glm::vec3 dir(xp+0.5*cellX, yp+0.5*cellY, -EDIST);	//direction of the primary ray
 
-            Ray ray = Ray(eye, dir);		//Create a ray originating from the camera in the direction 'dir'
-            ray.normalize();				//Normalize the direction of the ray to a unit vector
-            glm::vec3 col = trace (ray, 1); //Trace the primary ray and get the colour value
+            float xp1 = xp - cellX/4; float yp1 = yp + cellY/4;
+            float xp2 = xp - cellX/4; float yp2 = yp - cellY/4;
+            float xp3 = xp + cellX/4; float yp3 = yp + cellY/4;
+            float xp4 = xp + cellX/4; float yp4 = yp - cellY/4;
+
+            glm::vec3 dir1(xp1+0.5*cellX, yp1+0.5*cellY, -EDIST);	//direction of the primary ray
+            glm::vec3 dir2(xp2+0.5*cellX, yp2+0.5*cellY, -EDIST);	//direction of the primary ray
+            glm::vec3 dir3(xp3+0.5*cellX, yp3+0.5*cellY, -EDIST);	//direction of the primary ray
+            glm::vec3 dir4(xp4+0.5*cellX, yp4+0.5*cellY, -EDIST);	//direction of the primary ray
+
+            Ray ray1 = Ray(eye, dir1);		//Create a ray originating from the camera in the direction 'dir'
+            Ray ray2 = Ray(eye, dir2);		//Create a ray originating from the camera in the direction 'dir'
+            Ray ray3 = Ray(eye, dir3);		//Create a ray originating from the camera in the direction 'dir'
+            Ray ray4 = Ray(eye, dir4);		//Create a ray originating from the camera in the direction 'dir'
+
+            ray1.normalize();				//Normalize the direction of the ray to a unit vector
+            ray2.normalize();
+            ray3.normalize();
+            ray4.normalize();
+
+            glm::vec3 col1 = trace (ray1, 1); //Trace the primary ray and get the colour value
+            glm::vec3 col2 = trace (ray2, 1);
+            glm::vec3 col3 = trace (ray3, 1);
+            glm::vec3 col4 = trace (ray4, 1);
+
+            glm::vec3 col = glm::vec3((col1 + col2 + col3 + col4) / 4.0f);
 
             glColor3f(col.r, col.g, col.b);
             glVertex2f(xp, yp);				//Draw each cell with its color value
