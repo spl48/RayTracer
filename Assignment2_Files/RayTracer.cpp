@@ -87,6 +87,7 @@ void drawCube (int cubex, int cubey, int cubez, int cubeSize, float rotationAngl
 //----------------------------------------------------------------------------------
 glm::vec3 trace(Ray ray, int step)
 {
+
     glm::vec3 backgroundCol(0);
     glm::vec3 light(10, 40, -3);
     glm::vec3 ambientCol(0.2);   //Ambient color of light
@@ -137,7 +138,11 @@ glm::vec3 trace(Ray ray, int step)
         float texcoords = (ray.xpt.z - a1)/(a2-a1);
         float texcoordt = (ray.xpt.x - b1)/(b2-b1);
         colorSum = floorTexture.getColorAt(texcoords, texcoordt);
+        materialCol = floorTexture.getColorAt(texcoords, texcoordt);
         if (lDotn <= 0 || (shadow.xindex > -1 && shadow.xdist < length(light - ray.xpt))) {
+            if (shadow.xindex == 3 || shadow.xindex == 2) {
+                return ambientCol * materialCol + 0.8f*lDotn*materialCol;
+            }
             colorSum = ambientCol * colorSum;
         } else {
             colorSum = ambientCol * colorSum + lDotn * colorSum + spec;
@@ -184,6 +189,18 @@ glm::vec3 trace(Ray ray, int step)
         }
     }
 
+    if(ray.xindex == 7) //Procedural Textured Sphere
+    {
+        float col1 = fabs(sin(ray.xpt.x));
+        float col2 = fabs(sin(ray.xpt.y));
+        colorSum = glm::vec3(col1, col2, col1 + col2);
+        if (lDotn <= 0 || (shadow.xindex > -1 && shadow.xdist < length(light - ray.xpt))) {
+            colorSum = ambientCol * colorSum;
+        } else {
+            colorSum = ambientCol * colorSum + lDotn * colorSum + spec;
+        }
+    }
+
     return colorSum;
 
 }
@@ -213,7 +230,20 @@ void display()
         {
             yp = YMIN + j*cellY;
 
+            //No anti-aliasing
+//            glm::vec3 dir(xp+0.5*cellX, yp+0.5*cellY, -EDIST);	//direction of the primary ray
 
+//            Ray ray = Ray(eye, dir);		//Create a ray originating from the camera in the direction 'dir'
+//            ray.normalize();				//Normalize the direction of the ray to a unit vector
+//            glm::vec3 col = trace (ray, 1); //Trace the primary ray and get the colour value
+
+//            glColor3f(col.r, col.g, col.b);
+//            glVertex2f(xp, yp);				//Draw each cell with its color value
+//            glVertex2f(xp+cellX, yp);
+//            glVertex2f(xp+cellX, yp+cellY);
+//            glVertex2f(xp, yp+cellY);
+
+            //Anti-Alisaing
             float xp1 = xp - cellX/4; float yp1 = yp + cellY/4;
             float xp2 = xp - cellX/4; float yp2 = yp - cellY/4;
             float xp3 = xp + cellX/4; float yp3 = yp + cellY/4;
@@ -270,7 +300,7 @@ void initialize()
     earthTexture = TextureBMP("Earth.bmp");
 
     //-- Create a pointer to a sphere object
-    Sphere *sphere1 = new Sphere(glm::vec3(-5.0, 0.0, -120.0), 10.0, glm::vec3(0, 0, 1));
+    Sphere *sphere1 = new Sphere(glm::vec3(0.0, 0.0, -120.0), 10.0, glm::vec3(0, 0, 1));
     sceneObjects.push_back(sphere1);
 
     Plane *plane = new Plane (glm::vec3(-30., -20, -40),  //Point A
@@ -281,10 +311,10 @@ void initialize()
 
     sceneObjects.push_back(plane);
 
-    Sphere *refractiveSphere = new Sphere(glm::vec3(-7.0, -5.0, -110.0), 4.0, glm::vec3(0.3, 0.3, 0.3));
+    Sphere *refractiveSphere = new Sphere(glm::vec3(-2.0, -5.0, -110.0), 4.0, glm::vec3(0.3, 0.3, 0.3));
     sceneObjects.push_back(refractiveSphere);
 
-    Sphere *transparentSphere = new Sphere(glm::vec3(10.0, -12.0, -110.0), 4.0, glm::vec3(0.7, 0.3, 0.3));
+    Sphere *transparentSphere = new Sphere(glm::vec3(9.0, -12.0, -85.0), 4.0, glm::vec3(0.7, 0.3, 0.3));
     sceneObjects.push_back(transparentSphere);
 
     Sphere *texturedSphere = new Sphere(glm::vec3(30.0, 30.0, -170.0), 10.0, glm::vec3(0.0, 0.0, 0.0));
@@ -293,11 +323,14 @@ void initialize()
     Cylinder *cylinder = new Cylinder(glm::vec3(-15.0, -12.0, -115.0), 5.0, 2.0, glm::vec3(1.0, 1.0, 0.0));
     sceneObjects.push_back(cylinder);
 
-    Cone *cone = new Cone(glm::vec3(0.0, -20.0, -120.0), 5.0, 7.0, glm::vec3(0.0, 1.0, 1.0));
+    Cone *cone = new Cone(glm::vec3(0.0, -20.0, -115.0), 5.0, 10.0, glm::vec3(0.0, 1.0, 1.0));
     sceneObjects.push_back(cone);
 
+    Sphere *proceduralSphere = new Sphere(glm::vec3(-30.0, 30.0, -170.0), 10.0, glm::vec3(1.0, 0.0, 0.0));
+    sceneObjects.push_back(proceduralSphere);
+
     //-- Cube made of six planes
-    drawCube(10, -20, -140, 8, 30);
+    drawCube(10, -20, -105, 8, 30);
 }
 
 
