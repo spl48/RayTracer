@@ -330,7 +330,7 @@ void initialize()
     sceneObjects.push_back(proceduralSphere);
 
     //-- Cube made of six planes
-    drawCube(10, -20, -105, 8, 30);
+    drawCube(10, -20, -105, 10, 30);
 }
 
 
