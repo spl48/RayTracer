@@ -192,8 +192,9 @@ glm::vec3 trace(Ray ray, int step)
     if(ray.xindex == 7) //Procedural Textured Sphere
     {
         float col1 = fabs(sin(ray.xpt.x));
-        float col2 = fabs(sin(ray.xpt.y));
-        colorSum = glm::vec3(col1, col2, col1 + col2);
+        float col2 = fabs(cos(ray.xpt.x));
+        float col3 = fabs(sin(ray.xpt.z));
+        colorSum = glm::vec3(col1, col2, col3);
         if (lDotn <= 0 || (shadow.xindex > -1 && shadow.xdist < length(light - ray.xpt))) {
             colorSum = ambientCol * colorSum;
         } else {
@@ -314,7 +315,7 @@ void initialize()
     Sphere *refractiveSphere = new Sphere(glm::vec3(-2.0, -5.0, -110.0), 4.0, glm::vec3(0.3, 0.3, 0.3));
     sceneObjects.push_back(refractiveSphere);
 
-    Sphere *transparentSphere = new Sphere(glm::vec3(9.0, -12.0, -85.0), 4.0, glm::vec3(0.7, 0.3, 0.3));
+    Sphere *transparentSphere = new Sphere(glm::vec3(9.0, -12.0, -84.5), 4.0, glm::vec3(0.7, 0.3, 0.3));
     sceneObjects.push_back(transparentSphere);
 
     Sphere *texturedSphere = new Sphere(glm::vec3(30.0, 30.0, -170.0), 10.0, glm::vec3(0.0, 0.0, 0.0));

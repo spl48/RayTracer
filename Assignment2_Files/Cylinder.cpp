@@ -32,10 +32,6 @@ float Cylinder::intersect(glm::vec3 posn, glm::vec3 dir)
         else t1 = -1.0;
     }
     if(fabs(t2) < 0.001 ) t2 = -1.0;
-//    if (t2point.y > (height + center.y)) {
-//        if (t1point.y <= (height + center.y)) return t1;
-//        else t2 = -1.0;
-//    }
 
     return (t1 < t2)? t1: t2;
 }
@@ -46,12 +42,6 @@ float Cylinder::intersect(glm::vec3 posn, glm::vec3 dir)
 */
 glm::vec3 Cylinder::normal(glm::vec3 p)
 {
-//    glm::vec3 n;
-//    if (p.y >= center.y + height) {
-//        glm::vec3 n = glm::vec3(0, 1, 0);
-//    } else {
-//        glm::vec3 n = glm::vec3((p.x-center.x)/radius, 0, (p.z-center.z)/radius);
-//    }
     glm::vec3 n = glm::vec3((p.x-center.x)/radius, 0, (p.z-center.z)/radius);
     n = glm::normalize(n);
     return n;

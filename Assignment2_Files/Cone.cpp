@@ -10,7 +10,7 @@
 #include <math.h>
 
 /**
-* Cylinder's intersection method.  The input is a ray (pos, dir).
+* Cone's intersection method.  The input is a ray (pos, dir).
 */
 float Cone::intersect(glm::vec3 posn, glm::vec3 dir)
 {
